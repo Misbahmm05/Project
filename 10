@@ -1,0 +1,56 @@
+java -version
+git --version
+docker --version
+docker info
+
+index.html:
+<html>
+<head><title>Online Store</title></head>
+<body>
+    <h1>Welcome to My Online Store</h1>
+    <a href="about.html">About Us</a>
+</body>
+</html>
+
+about.html:
+<html>
+<head><title>About Us</title></head>
+<body>
+    <h1>About Our Store</h1>
+    <a href="index.html">Home</a>
+</body>
+</html>
+
+Dockerfile:
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+EXPOSE 80
+
+Jenkinsfile:
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'docker build -t ecommerce-app .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'docker stop ecommerce-app || exit /b 0'
+                bat 'docker rm ecommerce-app || exit /b 0'
+                bat 'docker run -d --name ecommerce-app -p 8081:80 ecommerce-app'
+            }
+        }
+    }
+}
+
+docker ps
