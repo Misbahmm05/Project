@@ -1,0 +1,35 @@
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+docker --version
+sudo docker run hello-world
+nano index.html
+<html>
+<body>
+<h1>My E-Commerce Store</h1>
+<p>Shop your favourite products!</p>
+<a href="products.html">View Products</a>
+</body>
+</html>
+
+nano product.html
+<html>
+<body>
+<h1>Our Products</h1>
+<p>Laptop - Rs. 50000</p>
+<p>Headphones - Rs. 1000</p>
+<p>Phone - Rs. 20000</p>
+<a href="index.html">Home</a>
+</body>
+</html>
+
+nano Dockerfile
+FROM nginx:latest
+COPY index.html /usr/share/nginx/html/index.html
+COPY products.html /usr/share/nginx/html/products.html
+EXPOSE 80
+
+sudo docker build -t ecommerce .
+sudo docker images
+sudo docker run -d -p 8080:80 --name ecommerce-app ecommerce
+sudo docker ps
