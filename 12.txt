@@ -1,0 +1,25 @@
+chmod 400 key.pem
+ssh -i key.pem ec2-user@PUBLIC_IP
+git clone https://github.com/Misbahmm05/Project.git
+sudo cp ~/Project/index.html /var/www/html/index.html
+
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+mkdir project
+cd project
+git init
+echo Hello > file.txt
+git add file.txt
+git commit -m "First commit"
+echo Welcome >> file.txt
+git diff
+git branch feature
+git switch feature
+git add .
+git commit -m "Feature update"
+git switch main
+git merge feature
+git remote add origin YOUR_GITHUB_REPOSITORY_URL
+git pull origin main --allow-unrelated-histories
+git push -u origin main
