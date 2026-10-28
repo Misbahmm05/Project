@@ -1,0 +1,30 @@
+mkdir JenkinsDemo
+cd JenkinsDemo
+git init
+notepad Jenkinsfile
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('*/5 * * * *')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the project'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing the project'
+            }
+        }
+    }
+}
+git add .
+git commit -m "Add Jenkinsfile"
+git branch -M main
+git remote add origin https://github.com/Misbahmm05/JenkinsDemo.git
+git push -u origin main
