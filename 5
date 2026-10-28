@@ -1,0 +1,34 @@
+sudo apt update
+sudo apt install ansible -y
+ansible --version
+python3 --version
+mkdir ansible-practical
+cd ansible-practical
+nano inventory
+localhost ansible_connection=local
+ansible -i inventory localhost -m ping
+nano setup.yml
+
+---
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
+    - name: Create webpage
+      copy:
+        content: "Hello Ansible"
+        dest: /var/www/html/index.html
+        
+ansible-playbook -i inventory setup.yml
+sudo systemctl status nginx
+curl http://localhost
