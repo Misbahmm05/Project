@@ -1,0 +1,21 @@
+import boto3
+from datetime import datetime
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('ExecutionTime')
+
+def lambda_handler(event, context):
+    now = datetime.now().isoformat()
+
+    table.put_item(
+        Item={
+            'id': str(datetime.now().timestamp()),
+            'date_time': now
+        }
+    )
+
+    return {
+        'statusCode': 200,
+        'body': 'Date and time stored successfully!'
+    }
+    
